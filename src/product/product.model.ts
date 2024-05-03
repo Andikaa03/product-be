@@ -12,8 +12,8 @@ export class Product {
   @Prop({ type: Number })
   price: number;
 
-  @Prop({ type: Number })
-  stock: number;
+  @Prop({ type: String })
+  whatsapp: string;
 
   @Prop({ type: String })
   category: string;

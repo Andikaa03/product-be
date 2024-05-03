@@ -9,10 +9,12 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { IsNotEmpty } from 'class-validator';
+import { JwtAuthGuard } from 'src/guards/auth.guard';
 
 class createProductDto {
   @IsNotEmpty()
@@ -25,7 +27,7 @@ class createProductDto {
   price: number;
 
   @IsNotEmpty()
-  stock: number;
+  whatsapp: string;
 
   @IsNotEmpty()
   category: string;
@@ -42,7 +44,7 @@ class updateProductDto {
   price: number;
 
   @IsNotEmpty()
-  stock: number;
+  whatsapp: string;
 
   @IsNotEmpty()
   category: string;
@@ -53,17 +55,22 @@ export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Get()
-  async getAllProduct(@Query('page') page: number) {
-    return this.productService.getList(page);
+  async getAllProduct(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+    @Query('category') category: string
+  ) {
+    return this.productService.getList({page, limit, category});
   }
-
+  
   @Post()
+  @UseGuards(JwtAuthGuard)
   async createProduct(
     @Body(ValidationPipe)
-    { name, image, price, stock, category }: createProductDto,
+    { name, image, price, whatsapp, category }: createProductDto,
   ) {
     try {
-      await this.productService.create({ name, image, price, stock, category });
+      await this.productService.create({ name, image, price, whatsapp, category });
       return {
         message: 'product has been created',
       };
@@ -85,14 +92,14 @@ export class ProductController {
     @Param('id')
     id: string,
     @Body(ValidationPipe)
-    { name, image, price, stock, category }: updateProductDto,
+    { name, image, price, whatsapp, category }: updateProductDto,
   ) {
     try {
       await this.productService.update(id, {
         name,
         image,
         price,
-        stock,
+        whatsapp,
         category,
       });
       return {

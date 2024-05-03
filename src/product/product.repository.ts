@@ -5,13 +5,13 @@ export interface ProductRepository {
     name,
     image,
     price,
-    stock,
+    whatsapp,
     category,
   }: {
     name: string;
     image: string;
     price: number;
-    stock: number;
+    whatsapp: string;
     category: string;
   }): Promise<void>;
 
@@ -21,18 +21,18 @@ export interface ProductRepository {
       name,
       image,
       price,
-      stock,
+      whatsapp,
       category,
     }: {
       name: string;
       image: string;
       price: number;
-      stock: number;
+      whatsapp: string;
       category: string;
     },
   ): Promise<void>;
 
-  getList(page: number): Promise<any>;
+  getList({ page,limit,category}:{page: number,limit:number,category:string}): Promise<any>;
 
   delete(id: string): Promise<void>;
 }

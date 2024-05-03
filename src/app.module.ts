@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductModule } from './about/product.module';
+import { ProductModule } from './product/product.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ProductController } from './about/product.controller';
+import { ProductController } from './product/product.controller';
 import { AuthModule } from './auth/auth.module';
 
 @Module({

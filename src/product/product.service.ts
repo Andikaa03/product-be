@@ -8,28 +8,28 @@ export class ProductService {
     private productRepository: ProductRepository,
   ) {}
 
-  async getList(page: number) {
-    return await this.productRepository.getList(page);
+  async getList({ page,limit,category}:{page: number,limit:number,category:string}) {
+    return await this.productRepository.getList({page,limit,category});
   }
 
   async create({
     name,
     image,
     price,
-    stock,
+    whatsapp,
     category,
   }: {
     name: string;
     image: string;
     price: number;
-    stock: number;
+    whatsapp: string;
     category: string;
   }) {
     return this.productRepository.create({
       name,
       image,
       price,
-      stock,
+      whatsapp,
       category,
     });
   }
@@ -50,13 +50,13 @@ export class ProductService {
       name,
       image,
       price,
-      stock,
+      whatsapp,
       category,
     }: {
       name: string;
       image: string;
       price: number;
-      stock: number;
+      whatsapp: string;
       category: string;
     },
   ) {
@@ -68,7 +68,7 @@ export class ProductService {
       name,
       image,
       price,
-      stock,
+      whatsapp,
       category,
     });
   }

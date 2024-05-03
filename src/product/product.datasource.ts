@@ -14,26 +14,28 @@ export class ProductDatasource implements ProductRepository {
     name,
     image,
     price,
-    stock,
+    whatsapp,
     category,
   }: {
     name: string;
     image: string;
     price: number;
-    stock: number;
+    whatsapp: string;
     category: string;
   }): Promise<void> {
     await this.productModel.create({
       name,
       image,
       price,
-      stock,
+      whatsapp,
       category,
     });
   }
 
-  async getList(page: number): Promise<any> {
-    return await this.productModel.paginate({}, { page, limit: 10 });
+  async getList({ page,limit = 10,category}:{page: number,limit:number,category:string}): Promise<any> {
+    const query = category ? { category } : {}; 
+  
+    return await this.productModel.paginate(query, { page, limit });
   }
 
   async find(id: string): Promise<any> {
@@ -48,13 +50,13 @@ export class ProductDatasource implements ProductRepository {
       name,
       image,
       price,
-      stock,
+      whatsapp,
       category,
     }: {
       name: string;
       image: string;
       price: number;
-      stock: number;
+      whatsapp: string;
       category: string;
     },
   ): Promise<void> {
@@ -67,7 +69,7 @@ export class ProductDatasource implements ProductRepository {
           name,
           image,
           price,
-          stock,
+          whatsapp,
           category,
         },
       },
