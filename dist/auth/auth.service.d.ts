@@ -32,6 +32,7 @@ export declare class AuthService {
     private userModel;
     private jwtService;
     constructor(userModel: Model<User>, jwtService: JwtService);
+    validateToken(token: string): any;
     register(register: RegisterDto): Promise<{
         token: string;
     }>;

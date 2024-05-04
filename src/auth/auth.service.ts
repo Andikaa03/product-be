@@ -15,6 +15,12 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  validateToken(token: string) {
+    return this.jwtService.verify(token, {
+        secret : process.env.JWT_SECRET_KEY
+    });
+}
+
   async register(register: RegisterDto): Promise<{ token: string }> {
     const { name, email, password } = register;
 

@@ -25,8 +25,8 @@ export class AuthController {
     }
   }
 
-  @Get('/login')
-  async login(@Body() loginDto: LoginDto) {
+  @Post('/login')
+  async login(@Body(ValidationPipe) loginDto: LoginDto) {
     try {
       const token = await this.authService.login(loginDto);
       return token;

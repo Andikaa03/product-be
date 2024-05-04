@@ -24,6 +24,11 @@ let AuthService = class AuthService {
         this.userModel = userModel;
         this.jwtService = jwtService;
     }
+    validateToken(token) {
+        return this.jwtService.verify(token, {
+            secret: process.env.JWT_SECRET_KEY
+        });
+    }
     async register(register) {
         const { name, email, password } = register;
         const hashedPassword = await bcrypt.hash(password, 10);

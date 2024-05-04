@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { IsNotEmpty } from 'class-validator';
-import { JwtAuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 class createProductDto {
   @IsNotEmpty()
@@ -63,8 +63,8 @@ export class ProductController {
     return this.productService.getList({page, limit, category});
   }
   
+  @UseGuards(AuthGuard)
   @Post()
-  @UseGuards(JwtAuthGuard)
   async createProduct(
     @Body(ValidationPipe)
     { name, image, price, whatsapp, category }: createProductDto,
@@ -87,6 +87,7 @@ export class ProductController {
     return this.productService.findById(id);
   }
 
+  @UseGuards(AuthGuard)
   @Put(':id')
   async update(
     @Param('id')
@@ -110,6 +111,7 @@ export class ProductController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async delete(
     @Param('id')

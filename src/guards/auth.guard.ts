@@ -1,9 +1,19 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import * as jwt from 'jsonwebtoken';
+
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') {
-  canActivate(context: ExecutionContext) {
-    return super.canActivate(context);
-  }
+export class AuthGuard implements CanActivate {
+ canActivate(context: ExecutionContext): boolean {
+ const request = context.switchToHttp().getRequest();
+ try {
+  const token = request.headers?.authorization.split(' ')[1];
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  request.user = decoded;
+
+  return true; // Token valid
+} catch (error) {
+   throw new UnauthorizedException()
+}
+ }
 }
