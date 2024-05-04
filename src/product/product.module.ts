@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as mongoosePaginate from 'mongoose-paginate-v2';
-import { Product, ProductModel } from './product.model';
+import { Product, ProductModel } from '../models/product.model';
 import { ProductDatasource } from './product.datasource';
 
 @Module({

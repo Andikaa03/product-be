@@ -1,5 +1,5 @@
 import { Model, PaginateModel, Types } from 'mongoose';
-import { Product, ProductDocument } from './product.model';
+import { Product, ProductDocument } from '../models/product.model';
 import { ProductRepository } from './product.repository';
 import { InjectModel } from '@nestjs/mongoose';
 
