@@ -1,4 +1,3 @@
-// user.controller.ts
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthGuard } from 'src/guards/auth.guard';
@@ -9,7 +8,10 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @Get()
-  getUser(@Req() req: any): any {
-    return this.userService.getUser(req.user.id);
+  async getUser(@Req() req: any): Promise<any> {
+    const userId = req.user.id
+    const token = req.headers.authorization.split(' ')[1];
+    const user =  await this.userService.getUser(userId);
+    return { user, token };
   }
 }
